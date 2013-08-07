@@ -1,0 +1,43 @@
+#!/bin/bash
+function count_cpus() {
+    if [ ! -r /proc/cpuinfo ]; then
+        return 1
+    fi
+    num=`grep 'core id' /proc/cpuinfo | sort -u | wc -l`
+    if [ $num -eq 0 ]; then
+        num=`grep '^processor' /proc/cpuinfo | sort -u | wc -l`
+    fi
+    return $num
+}
+
+cmake -G "Eclipse CDT4 - Unix Makefiles" $*
+if [ "$?" = "0" ]; then
+    # find relative path to the build directory from project root
+    #project_root=$(readlink -f ${BASH_ARGV[$#-1]})
+    project_root=$(cd ${BASH_ARGV[$#-1]}; pwd)
+    build_path=$PWD
+    build_rel_path=${build_path#${project_root}}
+
+    # change user included paths type
+    sed -e '/<pathentry include=/s/system="true"/system="false"/' \
+        -e '/<pathentry include="\/usr\//s/system="false"/system="true"/' -i .cproject
+
+    # find first <name>foobar-Debug@build</name> and strip tags and -Debug
+    project_name=$(sed -e '/<name>\(.*\)<\/name>/{ s/.*>\(.*\)-.*<.*/\1/;q }' -e 'd' .project)
+    # OR use project directory as project name
+    project_name=$(basename ${project_root})
+
+    # change project name to the desired one
+    sed -e "/<projectDescription>/{ n; s/\(.*>\).*\(<.*\)/\1${project_name}\2/ }" -i .project
+
+    count_cpus
+    #let num_jobs=$?\*3/2
+    let num_jobs=1
+    # replace absolute build path with workspace relative, add jobs parameter
+    # and remove verbose flag
+    sed -e "/org.eclipse.cdt.make.core.build.*ocation/{ n; s,\(.*<value>\).*,\1/${project_name}${build_rel_path}</value>, }" \
+        -e "/org.eclipse.cdt.make.core.environment/{ n; s/\bVERBOSE=1|// }" \
+        -e "/org.eclipse.cdt.make.core.build.arguments/{ n; s/<value>/<value>-j${num_jobs}/ }" \
+        -i .project
+    mv -i .project .cproject ${project_root}
+fi

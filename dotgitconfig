@@ -1,0 +1,12 @@
+[user]
+	name = Henry Wang
+	email = wh_henry@hotmail.com
+[core]
+	editor = nano
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+[color]
+	ui = true
