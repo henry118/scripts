@@ -10,3 +10,5 @@
 	st = status
 [color]
 	ui = true
+[push]
+	default = simple
