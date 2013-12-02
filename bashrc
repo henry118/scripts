@@ -57,3 +57,8 @@ man() {
     LESS_TERMCAP_us=$'\E[04;38;5;146m' \
     man "$@"
 }
+
+# Source work env related settings
+if [ -f "${HOME}/devel/cp_scripts/bashrc" ]; then
+   source "${HOME}/devel/cp_scripts/bashrc"
+fi
