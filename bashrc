@@ -3,9 +3,37 @@
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
 
-# Uncomment to turn on programmable completion enhancements.
+# History related
+HISTCONTROL=ignoreboth
+shopt -s histappend
+HISTSIZE=1000
+HISTFILESIZE=2000
+shopt -s checkwinsize
+
+# Terminal color
+if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
+    export TERM=xterm-256color
+fi
+case "$TERM" in
+    xterm-color|xterm-256color) color_prompt=yes;;
+esac
+if [ "$color_prompt" = yes ]; then
+    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='\u@\h:\w\$ '
+fi
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
 # Any completions you add in ~/.bash_completion are sourced last.
-# [[ -f /etc/bash_completion ]] && . /etc/bash_completion
+[[ -f /etc/bash_completion ]] && . /etc/bash_completion
 
 # Aliases
 #
@@ -18,7 +46,7 @@ alias grep='grep --color'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias cgrep='grep --color=always'
-alias ls='ls -hF --color=tty'
+alias ls='ls --color=auto'
 alias dir='ls --color=auto --format=vertical'
 alias vdir='ls --color=auto --format=long'
 alias ll='ls -l'
