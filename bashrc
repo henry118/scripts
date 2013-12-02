@@ -44,11 +44,20 @@ Linux)
     alias ls='ls --color=auto'
     alias dir='ls --color=auto --format=vertical'
     alias vdir='ls --color=auto --format=long'
-    alias pbcopy='cat > /dev/clipboard'
-    alias pbpaste='cat /dev/clipboard'
+    alias pbcopy='xclip -selection clipboard'
+    alias pbpaste='xclip -selection clipboard -o'
     ;;
 FreeBSD|Darwin)
     alias ls='ls -G'
+    ;;
+CYGWIN_NT-6.1-WOW64)
+    alias ls='ls --color=auto'
+    alias wp='cygpath -w'
+    alias ophere='explorer `wp .`'
+    alias open='cygstart'
+    alias pbcopy='cat > /dev/clipboard'
+    alias pbpaste='cat /dev/clipboard'
+    ;;
 esac
 alias less='less -r'
 alias grep='grep --color'
