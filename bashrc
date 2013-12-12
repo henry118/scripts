@@ -50,7 +50,7 @@ Linux)
 FreeBSD|Darwin)
     alias ls='ls -G'
     ;;
-CYGWIN_NT-6.1-WOW64)
+CYGWIN_NT-*)
     alias ls='ls --color=auto'
     alias wp='cygpath -w'
     alias ophere='explorer `wp .`'
