@@ -55,8 +55,9 @@ CYGWIN_NT-*)
     alias wp='cygpath -w'
     alias ophere='explorer `wp .`'
     alias open='cygstart'
-    alias pbcopy='cat > /dev/clipboard'
-    alias pbpaste='cat /dev/clipboard'
+    alias pbcopy='putclip'
+    alias pbpaste='getclip'
+    echo -ne '\e]4;12;#9090FF\a'
     ;;
 esac
 alias less='less -r'
