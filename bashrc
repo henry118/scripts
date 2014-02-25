@@ -32,9 +32,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-# Any completions you add in ~/.bash_completion are sourced last.
-[[ -f /etc/bash_completion ]] && . /etc/bash_completion
-
 # Aliases
 if [ -f "${HOME}/.bash_aliases" ]; then
    source "${HOME}/.bash_aliases"
