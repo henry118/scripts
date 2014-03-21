@@ -32,6 +32,11 @@ xterm*|rxvt*)
     ;;
 esac
 
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
 # Aliases
 if [ -f "${HOME}/.bash_aliases" ]; then
    source "${HOME}/.bash_aliases"
