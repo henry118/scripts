@@ -108,3 +108,6 @@ fi
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
+
+# Maven
+export MAVEN_OPTS="-XX:MaxPermSize=256m -Xmx1024M"
