@@ -76,7 +76,7 @@ alias em='emacsclient -nw'
 alias cless='LESSOPEN="|lessfilter %s" less'
 alias nless='less -N'
 alias ccat='pygmentize -f 256'
-alias wget-jpg='wget -r -l 1 -A jpg,jpeg -nd -H'
+alias wget-jpg='wget -r -l 1 -A jpg,jpeg -nd -H -q'
 
 # Umask
 # /etc/profile sets 022, removing write perms to group + others.
