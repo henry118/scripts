@@ -67,13 +67,16 @@ alias grep='grep --color'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias cgrep='grep --color=always'
+alias ngrep='grep -n'
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 alias diff='diff -u'
 alias em='emacsclient -nw'
 alias cless='LESSOPEN="|lessfilter %s" less'
+alias nless='less -N'
 alias ccat='pygmentize -f 256'
+alias wget-jpg='wget -r -l 1 -A jpg,jpeg -nd -H -q'
 
 # Umask
 # /etc/profile sets 022, removing write perms to group + others.
