@@ -1,1 +1,1 @@
-%_topdir%(echo $HOME)/rpmbuild
+%_topdir %(echo $HOME)/rpmbuild
