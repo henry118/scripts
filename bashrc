@@ -114,3 +114,10 @@ export QT_IM_MODULE=ibus
 
 # Maven
 export MAVEN_OPTS="-XX:MaxPermSize=256m -Xmx1024M"
+
+# Golang
+export GOPATH=$HOME/.golang
+export PATH="$GOPATH/bin:$PATH"
+if [ $(uname) == 'Darwin' ]; then
+    export PATH="$PATH:/usr/local/opt/go/libexec/bin"
+fi
