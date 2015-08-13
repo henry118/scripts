@@ -117,7 +117,7 @@ export MAVEN_OPTS="-XX:MaxPermSize=256m -Xmx1024M"
 
 # Golang
 export GOPATH=$HOME/.golang
-export PATH="$GOPATH/bin:$PATH"
 if [ $(uname) == 'Darwin' ]; then
-    export PATH="$PATH:/usr/local/opt/go/libexec/bin"
+    export GOROOT=/usr/local/opt/go/libexec
 fi
+export PATH="$PATH:$GOPATH/bin:$GOROOT/bin"
