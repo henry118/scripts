@@ -1,0 +1,6 @@
+[submodule "dotbot"]
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot
+[submodule "emacsd"]
+	path = emacsd
+	url = git@github.com:henry118/emacsd

@@ -1,0 +1,22 @@
+- clean: ['~']
+
+- link:
+    ~/.profile: dotprofile
+    ~/.bashrc: bashrc
+    ~/.emacs.d: emacsd/
+    ~/.authinfo: dotauthinfo
+    ~/.gdbinit: dotgdbinit
+    ~/.gitconfig: dotgitconfig
+    ~/.nanorc: dotnanorc
+    ~/.rpmmacros: dotrpmmacros
+    ~/bin/cmake-eclipse:
+        create: true
+        path: cmake-eclipse
+    ~/bin/colortable: colortable16.sh
+    ~/bin/diff2html: diff2html
+    ~/bin/lessfilter: lessfilter.sh
+    ~/bin/winrecord: winrecord.sh
+    ~/bin/256colors: 256colors2.pl
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
