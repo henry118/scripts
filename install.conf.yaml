@@ -9,6 +9,7 @@
     ~/.gitconfig: dotgitconfig
     ~/.nanorc: dotnanorc
     ~/.rpmmacros: dotrpmmacros
+    ~/.Xresources: dotXresources
     ~/bin/cmake-eclipse:
         create: true
         path: cmake-eclipse
