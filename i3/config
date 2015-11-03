@@ -155,3 +155,9 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
+# Set the wallpaper
+exec --no-startup-id feh --bg-scale ~/.i3/world_map-1920x1080.jpg
+
+# Lock screen shortcut
+bindsym $mod+x exec i3lock -e -i ~/.i3/world_map-1920x1080.png
