@@ -10,6 +10,7 @@
     ~/.nanorc: dotnanorc
     ~/.rpmmacros: dotrpmmacros
     ~/.Xresources: dotXresources
+    ~/.i3: i3/
     ~/bin/cmake-eclipse:
         create: true
         path: cmake-eclipse
