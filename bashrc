@@ -32,6 +32,15 @@ xterm*|rxvt*)
     ;;
 esac
 
+# If this is an xterm make sure the erase key to backspace
+case "$TERM" in
+xterm*)
+    stty erase '^?'
+    ;;
+*)
+    ;;
+esac
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
