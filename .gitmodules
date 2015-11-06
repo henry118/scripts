@@ -4,3 +4,6 @@
 [submodule "emacsd"]
 	path = emacsd
 	url = git@github.com:henry118/emacsd
+[submodule "shml"]
+	path = shml
+	url = https://github.com/MaxCDN/shml.git

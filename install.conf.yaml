@@ -19,6 +19,7 @@
     ~/bin/lessfilter: lessfilter.sh
     ~/bin/winrecord: winrecord.sh
     ~/bin/256colors: 256colors2.pl
+    ~/bin/shml: shml/shml.sh
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
