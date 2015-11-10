@@ -9,6 +9,7 @@
     ~/.gitconfig: dotgitconfig
     ~/.nanorc: dotnanorc
     ~/.rpmmacros: dotrpmmacros
+    ~/.esmtprc: dotesmtprc
     ~/.Xresources: dotXresources
     ~/.i3: i3/
     ~/bin/cmake-eclipse:

@@ -1,0 +1,11 @@
+identity henry118@gmail.com
+    hostname smtp.gmail.com:587
+    username "henry118@gmail.com"
+    password "<gmail password>"
+    starttls required
+
+identity wh_henry@hotmail.com
+    hostname smtp.live.com
+    username "wh_henry@hotmail.com"
+    password "<hotmail password>"
+    starttls required
