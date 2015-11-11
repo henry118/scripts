@@ -27,5 +27,6 @@
   - [mkdir -p ~/.maildir/inbox, Creating Maildir folder]
   -
     command: ./setup-mailrc.sh
+    description: Setting up all *.rc files for mails
     stdin: true
     stdout: true
