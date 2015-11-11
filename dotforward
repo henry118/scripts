@@ -1,0 +1,1 @@
+"|IFS=' ' && exec <procmail> || exit 75 #<USER>"

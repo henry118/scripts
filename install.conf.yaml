@@ -9,7 +9,7 @@
     ~/.gitconfig: dotgitconfig
     ~/.nanorc: dotnanorc
     ~/.rpmmacros: dotrpmmacros
-    ~/.esmtprc: dotesmtprc
+    ~/.procmailrc: dotprocmailrc
     ~/.Xresources: dotXresources
     ~/.i3: i3/
     ~/bin/cmake-eclipse:
@@ -24,3 +24,8 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
+  - [mkdir -p ~/.maildir/inbox, Creating Maildir folder]
+  -
+    command: ./setup-mailrc.sh
+    stdin: true
+    stdout: true

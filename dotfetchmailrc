@@ -1,0 +1,7 @@
+poll imap.gmail.com protocol imap
+    username "henry118@gmail.com" password "<gmail_pass>" is "<USER>" here
+    options keep ssl mda "<procmail> -f %F -d %T"
+
+poll imap-mail.outlook.com protocol imap
+    username "wh_henry@hotmail.com" password "<outlook_pass>" is "<USER>" here
+    options keep ssl mda "<procmail> -f %F -d %T"

@@ -1,0 +1,5 @@
+VERBOSE=off
+MAILDIR=$HOME/.maildir
+DEFAULT=$MAILDIR/inbox/
+LOGFILE=/dev/null
+SHELL=/bin/sh
