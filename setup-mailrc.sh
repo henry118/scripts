@@ -114,4 +114,5 @@ function setup_cron {
 #
 guess_sed
 patch_rcfiles
-setup_cron
+# no need to cron, instead, use 'fetchmail -d 60'
+#setup_cron
