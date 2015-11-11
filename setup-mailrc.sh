@@ -6,6 +6,21 @@
 gmail_pass=""
 outlook_pass=""
 procmail_bin=""
+sed_bin="sed -r"
+
+#
+# cross platform sed
+#
+function guess_sed {
+    local platform=$(uname)
+    case $platform in
+        Linux)
+        ;;
+        Darwin|FreeBSD)
+            sed_bin="sed -E"
+            ;;
+    esac
+}
 
 #
 # this function load the keys from keys.txt file if needed
@@ -29,7 +44,7 @@ function load_keys {
 #
 function procmail_path {
     if [ -z "$procmail_bin"] ; then
-        procmail_bin=$(which procmail)
+        procmail_bin=$(type -p procmail)
         if [ -z "$procmail_bin" ]; then
             echo "ERROR: can't find procmail binary, probably not installed?"
             exit 1
@@ -37,6 +52,27 @@ function procmail_path {
     fi
 }
 
+#
+# This function does the actual patch
+#
+function do_patch {
+    local src=$1
+    local dst=$2
+    local mode=$3
+    if [ ! -f $dst -o ! -s $dst ]; then
+        load_keys
+        $sed_bin \
+            -e "s|<gmail_pass>|$gmail_pass|g" \
+            -e "s|<outlook_pass>|$outlook_pass|g" \
+            -e "s|<procmail>|$procmail_bin|g" \
+            -e "s|<USER>|$USER|g" \
+            < $src \
+            > $dst
+        if [ ! -z "$mode" ]; then
+            chmod $mode $dst
+        fi
+    fi
+}
 
 #
 # Patch the rc files
@@ -44,41 +80,15 @@ function procmail_path {
 # I am using '|' instead of '/' for sed because $procmail_bin
 # contains '/' which invalidates sed command
 #
-function patch_rcs {
-
-    # ~/.forward
-    if [ ! -f ~/.forward ]; then
-        load_keys
-        sed -r \
-            -e "s|<procmail>|$procmail_bin|g" \
-            -e "s|<USER>|$USER|g" \
-            < dotforward \
-            > ~/.forward
+function patch_rcfiles {
+    procmail_path
+    do_patch dotforward ~/.forward
+    do_patch dotfetchmailrc ~/.fetchmailrc 600
+    if type -p esmtp > /dev/null; then
+        do_patch dotesmtprc ~/.esmtprc 600
     fi
-
-    # ~/.esmtprc
-    if [ ! -f ~/.esmtprc ]; then
-        load_keys
-        sed -r \
-            -e "s|<gmail_pass>|$gmail_pass|g" \
-            -e "s|<outlook_pass>|$outlook_pass|g" \
-            -e "s|<procmail>|$procmail_bin|g" \
-            < dotesmtprc \
-            > ~/.esmtprc
-        chmod 600 ~/.esmtprc
-    fi
-
-    # ~/.fetchmailrc
-    if [ ! -f ~/.fetchmailrc ]; then
-        load_keys
-        sed -r \
-            -e "s|<gmail_pass>|$gmail_pass|g" \
-            -e "s|<outlook_pass>|$outlook_pass|g" \
-            -e "s|<procmail>|$procmail_bin|g" \
-            -e "s|<USER>|$USER|g" \
-            < dotfetchmailrc \
-            > ~/.fetchmailrc
-        chmod 600 ~/.fetchmailrc
+    if type -p msmtp > /dev/null; then
+        do_patch dotmsmtprc ~/.msmtprc 600
     fi
 }
 
@@ -88,7 +98,12 @@ function patch_rcs {
 function setup_cron {
     crontab -l > ~/.mycron
     if ! grep -q 'fetchmail' ~/.mycron; then
-        echo "* * * * * fetchmail >/dev/null 2>&1" >> ~/.mycron
+        local fetchmail_bin=$(type -p fetchmail)
+        if [ -z $fetchmail_bin ]; then
+            echo "ERROR: fetchmail not found. possibly not installed?"
+            exit 1
+        fi
+        echo "* * * * * $fetchmail_bin >/dev/null 2>&1" >> ~/.mycron
         crontab ~/.mycron
     fi
     rm ~/.mycron
@@ -97,6 +112,6 @@ function setup_cron {
 #
 # main
 #
-procmail_path
-patch_rcs
+guess_sed
+patch_rcfiles
 setup_cron

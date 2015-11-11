@@ -1,0 +1,25 @@
+# Set default values for all following accounts.
+defaults
+auth           on
+tls            on
+tls_starttls   on
+tls_certcheck  off
+
+# Gmail
+account        gmail
+host           smtp.gmail.com
+port           587
+from           henry118@gmail.com
+user           henry118@gmail.com
+password       <gmail_pass>
+
+# Outlook
+account        outlook
+host           smtp.live.com
+port           587
+from           wh_henry@hotmail.com
+user           wh_henry@hotmail.com
+password       <outlook_pass>
+
+# Set a default account
+account default : gmail
