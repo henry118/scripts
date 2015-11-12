@@ -5,3 +5,7 @@ poll imap.gmail.com protocol imap
 poll imap-mail.outlook.com protocol imap
     username "wh_henry@hotmail.com" password "<outlook_pass>" is "<USER>" here
     options keep ssl mda "<procmail> -f %F -d %T"
+
+poll 127.0.0.1 protocol imap port 1143
+    username "henryw" password "<work_pass>" is "<USER>" here
+    options keep mda "/usr/bin/procmail -f %F -d %T"

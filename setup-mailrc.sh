@@ -5,6 +5,7 @@
 #
 gmail_pass=""
 outlook_pass=""
+work_pass=""
 procmail_bin=""
 sed_bin="sed -r"
 
@@ -26,14 +27,14 @@ function guess_sed {
 # this function load the keys from keys.txt file if needed
 #
 function load_keys {
-    if [ -z "$gmail_pass" -o -z "$outlook_pass" ]; then
+    if [ -z "$gmail_pass" -o -z "$outlook_pass" -o -z "$work_pass" ]; then
         if [ ! -f ./keys.txt ]; then
             echo "ERROR: file \"keys.txt\" doesn't exist."
             exit 1
         fi
         source ./keys.txt
-        if [ -z "$gmail_pass" -o -z "$outlook_pass" ]; then
-            echo "ERROR: \$gmail_pass or \$outlook_pass is empty."
+        if [ -z "$gmail_pass" -o -z "$outlook_pass" -o -z "$work_pass" ]; then
+            echo "ERROR: \$gmail_pass or \$outlook_pass or \$work_pass is empty."
             exit 1
         fi
     fi
@@ -64,6 +65,7 @@ function do_patch {
         $sed_bin \
             -e "s|<gmail_pass>|$gmail_pass|g" \
             -e "s|<outlook_pass>|$outlook_pass|g" \
+            -e "s|<work_pass>|$work_pass|g" \
             -e "s|<procmail>|$procmail_bin|g" \
             -e "s|<USER>|$USER|g" \
             < $src \

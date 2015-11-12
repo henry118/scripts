@@ -10,4 +10,9 @@ identity wh_henry@hotmail.com
     password "<outlook_pass>"
     starttls required
 
+identity henry.wang@citrix.com
+    hostname 127.0.0.1:1025
+    username "henryw"
+    password "<work_pass>"
+
 mda "<procmail> -f %F -d %T"

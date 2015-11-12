@@ -21,5 +21,15 @@ from           wh_henry@hotmail.com
 user           wh_henry@hotmail.com
 password       <outlook_pass>
 
+# Outlook
+account        work
+host           127.0.0.1
+port           1025
+from           henry.wang@citrix.com
+user           henryw
+password       <work_pass>
+tls            off
+tls_starttls   off
+
 # Set a default account
 account default : gmail

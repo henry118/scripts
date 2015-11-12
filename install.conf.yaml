@@ -11,6 +11,7 @@
     ~/.rpmmacros: dotrpmmacros
     ~/.procmailrc: dotprocmailrc
     ~/.Xresources: dotXresources
+    ~/.davmail.properties: davmail.properties
     ~/.i3: i3/
     ~/bin/cmake-eclipse:
         create: true
