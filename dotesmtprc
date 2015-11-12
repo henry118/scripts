@@ -11,7 +11,7 @@ identity wh_henry@hotmail.com
     starttls required
 
 identity henry.wang@citrix.com
-    hostname 127.0.0.1:1025
+    hostname sydlhenryw01.eng.citrite.net:1025
     username "henryw"
     password "<work_pass>"
 

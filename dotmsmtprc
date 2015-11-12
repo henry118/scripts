@@ -23,7 +23,7 @@ password       <outlook_pass>
 
 # Outlook
 account        work
-host           127.0.0.1
+host           sydlhenryw01.eng.citrite.net
 port           1025
 from           henry.wang@citrix.com
 user           henryw
