@@ -27,16 +27,8 @@ function guess_sed {
 # this function load the keys from keys.txt file if needed
 #
 function load_keys {
-    if [ -z "$gmail_pass" -o -z "$outlook_pass" -o -z "$work_pass" ]; then
-        if [ ! -f ./keys.txt ]; then
-            echo "ERROR: file \"keys.txt\" doesn't exist."
-            exit 1
-        fi
+    if [ -f ./keys.txt ]; then
         source ./keys.txt
-        if [ -z "$gmail_pass" -o -z "$outlook_pass" -o -z "$work_pass" ]; then
-            echo "ERROR: \$gmail_pass or \$outlook_pass or \$work_pass is empty."
-            exit 1
-        fi
     fi
 }
 
@@ -83,7 +75,6 @@ function do_patch {
 # contains '/' which invalidates sed command
 #
 function patch_rcfiles {
-    procmail_path
     do_patch dotforward ~/.forward
     do_patch dotfetchmailrc ~/.fetchmailrc 600
     if type -p esmtp > /dev/null; then
@@ -92,6 +83,13 @@ function patch_rcfiles {
     if type -p msmtp > /dev/null; then
         do_patch dotmsmtprc ~/.msmtprc 600
     fi
+}
+
+#
+# Delete exsiting rc files
+#
+function delete_rcfiles {
+    rm -f ~/.forward ~/.fetchmailrc ~/.esmtprc ~/.msmtprc
 }
 
 #
@@ -114,6 +112,21 @@ function setup_cron {
 #
 # main
 #
+while getopts :d opt; do
+    case $opt in
+        d)
+            delete_rcfiles
+            ;;
+        *)
+            echo "usage: `basename $0` [-d]"
+            exit 2
+    esac
+done
+shift `expr $OPTIND - 1`
+OPTIND=1
+
+load_keys
+procmail_path
 guess_sed
 patch_rcfiles
 # no need to cron, instead, use 'fetchmail -d 60'
