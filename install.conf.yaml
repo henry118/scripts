@@ -13,6 +13,9 @@
     ~/.Xresources: dotXresources
     ~/.davmail.properties: davmail.properties
     ~/.i3: i3/
+    ~/.gnupg/gpg.conf
+        create: true
+        path: dotgpg.conf
     ~/bin/cmake-eclipse:
         create: true
         path: cmake-eclipse
