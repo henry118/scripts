@@ -13,9 +13,11 @@
     ~/.Xresources: dotXresources
     ~/.davmail.properties: davmail.properties
     ~/.i3: i3/
-    ~/.gnupg/gpg.conf
+    ~/.gnupg/gpg.conf:
         create: true
-        path: dotgpg.conf
+        path: gnupg/gpg.conf
+    ~/.gnupg/sks-keyservers.netCA.pem: gnupg/sks-keyservers.netCA.pem
+    ~/.gnupg/sks-keyservers.netCA.pem.asc: gnupg/sks-keyservers.netCA.pem.asc
     ~/bin/cmake-eclipse:
         create: true
         path: cmake-eclipse
