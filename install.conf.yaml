@@ -11,6 +11,7 @@
     ~/.rpmmacros: dotrpmmacros
     ~/.procmailrc: dotprocmailrc
     ~/.Xresources: dotXresources
+    ~/.hwang.el: hwang.el
     ~/.davmail.properties: davmail.properties
     ~/.i3: i3/
     ~/.gnupg/gpg.conf:
