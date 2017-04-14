@@ -3,7 +3,6 @@
 - link:
     ~/.profile: dotprofile
     ~/.bashrc: bashrc
-    ~/.emacs.d: emacsd/
     ~/.authinfo: dotauthinfo
     ~/.gdbinit: dotgdbinit
     ~/.gitconfig: dotgitconfig
