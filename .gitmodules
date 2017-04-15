@@ -1,6 +1,10 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+	branch = master
+	update = rebase
 [submodule "shml"]
 	path = shml
 	url = https://github.com/MaxCDN/shml.git
+	branch = master
+	update = rebase
