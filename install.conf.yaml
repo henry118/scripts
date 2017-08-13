@@ -27,6 +27,7 @@
     ~/bin/winrecord: winrecord.sh
     ~/bin/256colors: 256colors2.pl
     ~/bin/shml: shml/shml.sh
+    ~/bin/lockscrn: lockscrn.sh
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
