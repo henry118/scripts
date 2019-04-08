@@ -13,6 +13,7 @@
     ~/.hwang.el: hwang.el
     ~/.davmail.properties: davmail.properties
     ~/.i3: i3/
+    ~/.iterm2: iterm2/
     ~/.gnupg/gpg.conf:
         create: true
         path: gnupg/gpg.conf
