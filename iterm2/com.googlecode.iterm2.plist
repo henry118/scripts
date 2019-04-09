@@ -50192,15 +50192,15 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>195 399 755 77 0 0 1280 777 </string>
+	<string>997 616 755 77 0 0 3440 1417 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>330 296 620 392 0 0 1280 777 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>567 285 609 401 0 0 1280 777 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>169 244 796 486 0 0 1280 800 </string>
+	<string>169 235 796 486 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 325 570 452 0 0 1280 777 </string>
+	<string>-1280 23 1280 754 -1280 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>343 107 585 452 0 0 2560 1058 </string>
 	<key>New Bookmarks</key>
@@ -50799,7 +50799,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>UbuntuMono-Regular 16</string>
+			<string>Monaco 12</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<false/>
 			<key>Option Key Sends</key>
@@ -50937,7 +50937,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-04-06T21:14:38Z</date>
+	<date>2019-04-08T05:08:21Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
