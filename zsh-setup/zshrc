@@ -1,0 +1,163 @@
+# ~/.zshrc
+
+typeset -U path
+[[ -d "$HOME/.docker/bin" ]] && path+=("$HOME/.docker/bin")
+path=("$HOME/.local/bin" $path)
+[[ -d "${CARGO_HOME:-$HOME/.cargo}/bin" ]] && path+=("${CARGO_HOME:-$HOME/.cargo}/bin")
+export ZSH="$HOME/.oh-my-zsh"
+[[ -d "$HOME/.fzf" ]] && export FZF_BASE="$HOME/.fzf"
+
+# Let Starship own the prompt.
+ZSH_THEME=""
+HIST_STAMPS="yyyy-mm-dd"
+
+plugins=(git)
+(( $+commands[docker] )) && plugins+=(docker docker-compose)
+(( $+commands[kubectl] )) && plugins+=(kubectl)
+(( $+commands[aws] )) && plugins+=(aws)
+(( $+commands[go] )) && plugins+=(golang)
+(( $+commands[fzf] )) && plugins+=(fzf)
+(( $+commands[zoxide] )) && plugins+=(zoxide)
+(( $+commands[direnv] )) && plugins+=(direnv)
+plugins+=(zsh-autosuggestions zsh-syntax-highlighting)
+
+source "$ZSH/oh-my-zsh.sh"
+
+# ------------------------------------------------------------
+# History
+# ------------------------------------------------------------
+
+HISTSIZE=100000
+SAVEHIST=100000
+
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE
+
+# ------------------------------------------------------------
+# Zsh behavior
+# ------------------------------------------------------------
+
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+
+unsetopt BEEP
+
+# ------------------------------------------------------------
+# Completion
+# ------------------------------------------------------------
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list \
+  'm:{a-zA-Z}={A-Za-z}' \
+  'r:|=*' \
+  'l:|=* r:|=*'
+
+zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
+zstyle ':completion:*' group-name ''
+
+# ------------------------------------------------------------
+# CLI defaults
+# ------------------------------------------------------------
+
+if command -v eza >/dev/null; then
+  alias ls='eza'
+  alias ll='eza -lah --git --icons'
+  alias lt='eza --tree --level=2 --icons'
+fi
+
+# Debian/Ubuntu may call the binary batcat.
+if ! command -v bat >/dev/null && command -v batcat >/dev/null; then
+  bat() { command batcat "$@"; }
+fi
+if command -v bat >/dev/null; then
+  alias cat='bat --paging=never'
+  alias b='bat --paging=always'
+fi
+
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# ------------------------------------------------------------
+# Git
+# ------------------------------------------------------------
+
+alias g='git'
+alias gs='git status -sb'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gl='git log --graph --decorate --oneline --all'
+
+# ------------------------------------------------------------
+# Kubernetes
+# ------------------------------------------------------------
+
+alias k='kubectl'
+alias kg='kubectl get'
+alias kd='kubectl describe'
+
+compdef k=kubectl
+
+kctx() {
+  (( $+commands[kubectl] && $+commands[fzf] )) || { print -u2 'kctx requires kubectl and fzf'; return 1; }
+  local context
+  context="$(
+    kubectl config get-contexts -o name |
+      fzf --prompt='kube context > '
+  )" || return
+
+  [[ -n "$context" ]] && kubectl config use-context "$context"
+}
+
+kns() {
+  (( $+commands[kubectl] && $+commands[fzf] )) || { print -u2 'kns requires kubectl and fzf'; return 1; }
+  local namespace
+  namespace="$(
+    kubectl get namespace \
+      -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' |
+      fzf --prompt='namespace > '
+  )" || return
+
+  [[ -n "$namespace" ]] && kubectl config set-context --current --namespace="$namespace"
+}
+
+# ------------------------------------------------------------
+# fzf
+# ------------------------------------------------------------
+
+export FZF_DEFAULT_OPTS="
+  --height=60%
+  --layout=reverse
+  --border
+  --info=inline
+"
+
+if (( $+commands[bat] || $+commands[batcat] )); then
+  # fzf previews run in a child shell, so use a real executable, not a function.
+  _preview_bat=${commands[bat]:-${commands[batcat]}}
+  export FZF_CTRL_T_OPTS="
+  --preview '\"$_preview_bat\" --color=always --style=numbers --line-range=:300 {} 2>/dev/null'
+"
+  unset _preview_bat
+fi
+
+# ------------------------------------------------------------
+# Toolchain
+# ------------------------------------------------------------
+
+if command -v mise >/dev/null; then
+  eval "$(mise activate zsh)"
+fi
+
+# ------------------------------------------------------------
+# Prompt
+# ------------------------------------------------------------
+
+if command -v starship >/dev/null; then
+  eval "$(starship init zsh)"
+fi
