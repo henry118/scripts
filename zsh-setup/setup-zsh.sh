@@ -296,6 +296,9 @@ fi
 cat > "$setup_tmp/zshrc" <<'ZSH_SETUP_RC_PAYLOAD'
 # ~/.zshrc
 
+# Machine-local secrets/overrides (untracked, not managed by setup-zsh.sh).
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+
 typeset -U path
 [[ -d "$HOME/.docker/bin" ]] && path+=("$HOME/.docker/bin")
 path=("$HOME/.local/bin" $path)
