@@ -1,8 +1,8 @@
 # ── Look ─────────────────────────────────────────
 # Auto-follows macOS light/dark appearance
 theme = dark:Catppuccin Mocha,light:Catppuccin Latte
-font-family = "JetBrainsMono Nerd Font Mono"
-font-size = 15
+font-family = JetBrainsMono Nerd Font Mono
+font-size = 14
 # Crisper text on Retina
 font-thicken = true
 adjust-cell-height = 10%
@@ -22,11 +22,16 @@ unfocused-split-opacity = 0.8
 split-divider-color = #45475a
 resize-overlay = never
 
-# ── Behavior ─────────────────────────────────────
+# ── Terminal type / SSH ──────────────────────────
+# Universal TERM: every Linux host (and root, and sudo) knows it,
+# so no per-host terminfo install is ever needed.
+term = xterm-256color
 shell-integration = detect
-# ssh-terminfo installs Ghostty's terminfo on remote hosts;
-# ssh-env falls back to TERM=xterm-256color if that fails
-shell-integration-features = cursor,sudo,title,ssh-env,ssh-terminfo
+# No ssh-terminfo on purpose: it only installs into the user's ~/.terminfo,
+# which root can't see.
+shell-integration-features = cursor,sudo,title,ssh-env
+
+# ── Behavior ─────────────────────────────────────
 # Alt/Meta works in vim and readline
 macos-option-as-alt = true
 copy-on-select = clipboard
