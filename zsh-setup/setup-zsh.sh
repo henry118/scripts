@@ -81,9 +81,9 @@ log "Target: $setup_home | OS: $setup_os | package manager: $setup_pm"
 if [[ $setup_config_only -eq 0 ]]; then
   if [[ $setup_os == Darwin ]]; then
     log 'Use system Zsh, curl and unzip plus existing Git (Apple Command Line Tools may be required).'
-    log 'Download missing fzf, zoxide, direnv, bat and ripgrep from upstream into ~/.local/bin.'
+    log 'Download missing fzf, zoxide, direnv, bat, ripgrep and gh from upstream into ~/.local/bin.'
   else
-    log 'Install missing shell tools: Zsh, Git, curl, unzip, fzf, zoxide, direnv, bat, ripgrep; try eza when available. Also install CA certificates.'
+    log 'Install missing shell tools: Zsh, Git, curl, unzip, fzf, zoxide, direnv, bat, ripgrep; try gh and eza when available. Also install CA certificates.'
   fi
   log 'Install missing Starship through its official installer; clone missing Oh My Zsh and two zsh-users plugins.'
   [[ $setup_pm != pacman ]] || log 'Arch: run a full system upgrade (pacman -Syu) before installing packages to avoid partial upgrades.'
@@ -163,9 +163,13 @@ mac_release_binary() {
   else
     log "$executable: upstream metadata has no SHA-256 digest; using the HTTPS release download."
   fi
-  if [[ "$kind" == tar ]]; then
+  if [[ "$kind" == tar || "$kind" == zip ]]; then
     mkdir "$release_dir/unpacked"
-    tar -xzf "$asset" -C "$release_dir/unpacked"
+    if [[ "$kind" == tar ]]; then
+      tar -xzf "$asset" -C "$release_dir/unpacked"
+    else
+      unzip -q "$asset" -d "$release_dir/unpacked"
+    fi
     source=$(find "$release_dir/unpacked" -type f -name "$executable")
     [[ -n "$source" && -f "$source" ]] || die "Could not locate one $executable executable in archive"
   else
@@ -200,6 +204,7 @@ install_mac_tools() {
   mac_release_binary direnv/direnv direnv "direnv.darwin-${go_arch}" binary
   mac_release_binary sharkdp/bat bat "bat-*-${rust_arch}-apple-darwin.tar.gz" tar
   mac_release_binary BurntSushi/ripgrep rg "ripgrep-*-${rust_arch}-apple-darwin.tar.gz" tar
+  mac_release_binary cli/cli gh "gh_*_macOS_${go_arch}.zip" zip
   if [[ $setup_eza -eq 0 ]] && ! has eza; then log 'Keeping standard ls; use --with-eza to build eza from source.'; fi
 }
 
@@ -258,6 +263,10 @@ if [[ $setup_config_only -eq 0 ]]; then
     ensure_tool direnv direnv
     ensure_tool rg ripgrep
     if ! has bat && ! has batcat; then pkg_install bat; fi
+    if ! has gh; then
+      if [[ $setup_pm == pacman ]]; then setup_gh_pkg=github-cli; else setup_gh_pkg=gh; fi
+      if ! pkg_install "$setup_gh_pkg"; then log 'gh is unavailable from enabled repositories; skipping GitHub CLI.'; fi
+    fi
     if [[ $setup_eza -eq 0 ]] && ! has eza; then
       if ! pkg_install eza; then log 'eza is unavailable; standard ls will remain active.'; fi
     fi
@@ -318,6 +327,7 @@ plugins=(git)
 (( $+commands[fzf] )) && plugins+=(fzf)
 (( $+commands[zoxide] )) && plugins+=(zoxide)
 (( $+commands[direnv] )) && plugins+=(direnv)
+(( $+commands[gh] )) && plugins+=(gh)
 plugins+=(zsh-autosuggestions zsh-syntax-highlighting)
 
 source "$ZSH/oh-my-zsh.sh"

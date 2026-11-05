@@ -22,6 +22,7 @@ plugins=(git)
 (( $+commands[fzf] )) && plugins+=(fzf)
 (( $+commands[zoxide] )) && plugins+=(zoxide)
 (( $+commands[direnv] )) && plugins+=(direnv)
+(( $+commands[gh] )) && plugins+=(gh)
 plugins+=(zsh-autosuggestions zsh-syntax-highlighting)
 
 source "$ZSH/oh-my-zsh.sh"
